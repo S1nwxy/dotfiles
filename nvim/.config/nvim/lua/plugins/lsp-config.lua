@@ -30,9 +30,15 @@ return {
 			})
 			lspconfig.ltex.setup({
 				capabilities = capabilities,
+				filetypes = { "latex", "tex", "markdown", "md" },
 				root_dir = lspconfig.util.root_pattern("ltex-cli", "ltex-ls"),
 				settings = {
 					language = "fr_FR",
+					ltex = {
+						additionalRules = {
+							motherTongue = "fr",
+						},
+					},
 				},
 			})
 			lspconfig.texlab.setup({
