@@ -19,7 +19,16 @@ return {
 				"jsonc",
 				"hyprlang",
 			},
+			require("nvim-ts-autotag").setup({
+				enable = true,
+				filetypes = { "html", "xml", "tsx" },
+			}),
+			-- lvim.builtin.treesitter.autotag.enable = true
 			auto_install = true,
+			auto_tag = {
+				enable = true,
+				filetypes = { "html", "xml", "php", "vue" },
+			},
 			highlight = { enable = true },
 			indent = { enable = true },
 			vim.filetype.add({
