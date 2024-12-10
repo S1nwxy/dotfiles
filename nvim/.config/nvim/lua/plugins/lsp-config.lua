@@ -15,7 +15,7 @@ return {
 		},
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "ltex", "texlab", "clangd", "marksman" },
+				ensure_installed = { "lua_ls", "ltex", "texlab", "clangd", "marksman", "bashls" },
 			})
 		end,
 	},
@@ -26,6 +26,9 @@ return {
 
 			local lspconfig = require("lspconfig")
 			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
+			})
+			lspconfig.bashls.setup({
 				capabilities = capabilities,
 			})
 			lspconfig.ltex.setup({
