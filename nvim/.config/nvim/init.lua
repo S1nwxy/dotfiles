@@ -14,8 +14,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.g.vimtex_view_method = "zathura"
-vim.g.vimtex_compiler = "latexmk"
+-- To change the commentstring for C# files
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "cs",
+	callback = function()
+		vim.opt_local.commentstring = "// %s"
+	end,
+})
 
 require("vim-config")
 require("lazy").setup("plugins")

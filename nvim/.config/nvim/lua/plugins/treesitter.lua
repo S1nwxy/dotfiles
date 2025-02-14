@@ -18,6 +18,7 @@ return {
 				"bash",
 				"jsonc",
 				"hyprlang",
+				"c_sharp",
 			},
 			require("nvim-ts-autotag").setup({
 				enable = true,

@@ -15,7 +15,19 @@ return {
 		},
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "ltex", "texlab", "clangd", "marksman", "bashls" },
+				ensure_installed = {
+					"lua_ls",
+					"ltex",
+					"texlab",
+					"clangd",
+					"marksman",
+					"bashls",
+					"csharp_ls",
+					"html",
+					"phpactor",
+					"denols",
+					"cssls",
+				},
 			})
 		end,
 	},
@@ -61,6 +73,16 @@ return {
 			lspconfig.html.setup({
 				capabilities = capabilities,
 			})
+			lspconfig.phpactor.setup({
+				capabilities = capabilities,
+			})
+			lspconfig.csharp_ls.setup({
+				capabilities = capabilities,
+			})
+			lspconfig.denols.setup({
+				capabilities = capabilities,
+			})
+
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, {})
