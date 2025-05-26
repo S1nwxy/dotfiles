@@ -1,0 +1,188 @@
+
+/*****----- Configuration -----*****/
+configuration {
+    show-icons:                 false;
+    font: "JetBrainsMono Nerd Font 12";
+}
+
+/*****----- Global Properties -----*****/
+* {
+    bg-color:               #1e1e2e;
+    border-color:           #cba6f7;
+    //normal-foreground:      #b4befe;
+    normal-foreground:      #313244;
+    normal-background:      #f5e0dc;
+
+    selected-normal-background: #b4befe;
+    selected-normal-foreground: #1e1e2e;
+
+    /*****----- Catppuccin Palette -----*****/
+    blue:                   #89b4fa;
+    lavender:               #b4befe;
+    sapphire:               #74c7ec;
+    sky:                    #89dceb;
+    teal:                   #94e2d5;
+    green:                  #a6e3a1;
+    yellow:                 #f9e2af;
+    peach:                  #fab387;
+    maroon:                 #eba0ac;
+    red:                    #f38ba8;
+    mauve:                  #cba6f7;
+    pink:                   #f5c2e7;
+    flamingo:               #f2cdcd;
+    rosewater:              #f5e0dc;
+    surface0:               #313244;
+    surface1:               #45475a;
+    surface2:               #585b70;
+    base:                   #1e1e2e;
+}
+
+/*****----- Main Window -----*****/
+window {
+    /* properties for window widget */
+    transparency:                "real";
+    location:                    center;
+    anchor:                      center;
+    fullscreen:                  false;
+    width:                       605px;
+    x-offset:                    0px;
+    y-offset:                    0px;
+
+    /* properties for all widgets */
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      2px solid;
+    border-radius:               10px;
+    border-color:                @border-color;
+    cursor:                      "default";
+    background-color:            @bg-color;
+}
+
+/*****----- Main Box -----*****/
+mainbox {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     20px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    children:                    [ "inputbar", "message", "listview" ];
+}
+
+/*****----- Inputbar -----*****/
+inputbar {
+    enabled:                     true;
+    spacing:                     10px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px;
+    border-radius:               0px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    text-color:                  @normal-foreground;
+    children:                    [ "textbox-prompt-colon", dummy, "prompt"];
+}
+
+dummy {
+    background-color:            transparent;
+}
+
+textbox-prompt-colon {
+    enabled:                     true;
+    expand:                      false;
+    str:                         "";
+    padding:                     10px 14px;
+    border-radius:               4px;
+    background-color:            @normal-foreground;
+    text-color:                  @normal-background;
+}
+prompt {
+    enabled:                     true;
+    padding:                     10px;
+    border-radius:               4px;
+    background-color:            @normal-foreground;
+    text-color:                  @normal-background;
+}
+
+/*****----- Message -----*****/
+message {
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               4px;
+    border-color:                @border-color;
+    background-color:            @normal-foreground;
+    text-color:                  @normal-background;
+}
+textbox {
+    background-color:            inherit;
+    text-color:                  inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+    placeholder-color:           @normal-foreground;
+    blink:                       true;
+    markup:                      true;
+}
+error-message {
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @border-color;
+    background-color:            @normal-foreground;
+    text-color:                  @normal-background;
+}
+
+/*****----- Listview -----*****/
+listview {
+    enabled:                     true;
+    columns:                     5;
+    lines:                       1;
+    cycle:                       true;
+    dynamic:                     true;
+    scrollbar:                   false;
+    layout:                      vertical;
+    reverse:                     false;
+    fixed-height:                true;
+    fixed-columns:               true;
+    
+    spacing:                     5px;
+    margin:                      0px;
+    padding:                     0px;
+    border:                      0px solid;
+    border-radius:               0px;
+    border-color:                @border-color;
+    background-color:            transparent;
+    text-color:                  @normal-foreground;
+    cursor:                      "default";
+}
+
+/*****----- Elements -----*****/
+element {
+    enabled:                     true;
+    spacing:                     0px;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               4px;
+    border-color:                @border-color;
+    background-color:            @normal-foreground;
+    text-color:                  @normal-background;
+    cursor:                      pointer;
+}
+element-text {
+    background-color:            transparent;
+    text-color:                  inherit;
+    cursor:                      inherit;
+    vertical-align:              0.5;
+    horizontal-align:            0.5;
+}
+element selected.normal {
+    border:                      0px 2px 0px 2px;
+    border-radius:               4px;
+    background-color:            @selected-normal-background;
+    text-color:                  @selected-normal-foreground;
+}

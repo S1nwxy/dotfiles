@@ -14,6 +14,9 @@ return {
 					--		"-file-line-error",
 					"-synctex=1",
 					"-interaction=nonstopmode",
+					"-r /home/jojo/.latexmkrc",
+					-- "-auxdir=auxiliaries",
+					"-bibtex",
 				},
 			}
 			vim.g.vimtex_view_method = "zathura"

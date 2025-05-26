@@ -9,17 +9,18 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 2
 
 set $mod Mod4
 # set $mod Mod1
 
 exec --no-startup-id picom
-exec_always --no-startup-id feh --bg-scale ~/.config/backgrounds/minimalist_wallpaper_1.jpg
-# exec_always --no-startup-id feh --bg-scale ~/.config/backgrounds/tux_wallpaper.jpg
+exec --no-startup-id feh --bg-scale ~/.config/backgrounds/catppuccin_triangle.png
 exec --no-startup-id xrdb -merge ~/.Xresources
-exec_always --no-startup-id setxkbmap 
+exec_always --no-startup-id setxkbmap 
 #-option ctrl:nocaps
+
+exec_always --no-startup-id redshift-gtk -l 45.43389:4.39 -t 6500:3000
 
 # To use autotiling (spiral tiling)or i3 instead of the default manual tiling (only vertical)
 # exec_always --no-startup-id autotiling 
@@ -27,7 +28,6 @@ exec_always --no-startup-id setxkbmap
 # kill any hanging polybar processes
 exec_always killall polybar
 exec_always --no-startup-id $HOME/.config/polybar/launch_polybar.sh
-# exec_always --no-startup-id polybar
 
 # execute a script that warn you if the battery is low
 # -n to get notifications (an i3 popup)
@@ -36,6 +36,9 @@ exec_always --no-startup-id $HOME/.config/polybar/launch_polybar.sh
 # -f to set the font
 exec --no-startup-id $HOME/i3_battery_popup/i3-battery-popup-1.1.1/i3-battery-popup -n -L 30% -I 5% -f pango:JetBrains Mono 11 
 
+exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
+
+################################# Screenshots ######################################
 ##  Screenshots in files
 bindsym Ctrl+Print exec --no-startup-id maim --format=png "/home/$USER/Images/screenshot/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-all.png"
 bindsym Ctrl+$mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) "/home/$USER/Images/screenshot/screenshot-$(date -u +'%Y%m%d-%H%M%SZ')-current.png"
@@ -44,7 +47,9 @@ bindsym Ctrl+Shift+Print exec --no-startup-id maim --format=png --select "/home/
 ## Screenshots in clipboards
 bindsym Print exec --no-startup-id maim --format=png | xclip -selection clipboard -t image/png
 bindsym $mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
+
 bindsym $mod+Shift+S exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+########################################################################################
 
 # To enable touchpad tap clicking 
 exec xinput set-prop "SYNA32AA:00 06CB:CE17 Touchpad" "libinput Tapping Enabled" 1
@@ -60,7 +65,7 @@ bindsym Mod1+Shift+l exec systemctl suspend
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:JetBrains Mono 11
+font pango:JetBrainsMono Nerd Font 11
 
 # Key-binding to launch Boomer
 bindsym $mod+b exec boomer
@@ -87,13 +92,9 @@ exec --no-startup-id blueman-applet
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-# bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-# bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-# bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-# bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1dB && $refresh_i3status
 # bindsym Ctrl+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1dB && $refresh_i3status
 # bindsym Shift+XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
@@ -121,9 +122,12 @@ bindsym $mod+e exec nautilus
 bindsym $mod+Shift+q kill
 
 # start rofi (a program launcher)
-bindsym $mod+d exec --no-startup-id rofi -show drun
-bindsym $mod+space exec --no-startup-id rofi -show combi
-bindsym $mod+Tab exec --no-startup-id rofi -show window
+# bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec --no-startup-id $HOME/.config/rofi/launcher.sh
+# bindsym $mod+space exec --no-startup-id rofi -show combi
+# bindsym $mod+Tab exec --no-startup-id rofi -show window
+bindsym $mod+m exec --no-startup-id $HOME/.config/rofi/powermenu
+bindsym $mod+c exec --no-startup-id $HOME/.config/rofi/calculator.sh
 
 # change focus
 bindsym $mod+h focus left
@@ -236,6 +240,9 @@ mode "resize" {
 }
 
 bindsym $mod+r mode "resize"
+
+gaps outer 6 
+gaps inner 6
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

@@ -1,0 +1,65 @@
+#!/bin/env bash
+
+# Options for powermenu
+lock=' Lock'
+logout=' Logout'
+sleep='󰤄 Sleep'
+shutdown=' OFF'
+reboot=' Reboot'
+host="$(cat /etc/os-release | grep ^NAME | sed 's/NAME=//g' | sed 's/"//g')" 
+
+# Function to show confirmation dialog
+show_confirmation() {
+    local action=$1
+    local response=$(printf "No \nYes" | rofi -dmenu \
+                     -p "Confirm $action?" \
+                     -mesg "Are you sure you want to $action?" \
+                     -theme "~/.config/rofi/powermenu.rasi")
+    
+    if [ "$response" == "Yes" ]; then
+        return 0  # Confirmed
+    else
+        return 1  # Cancelled
+    fi
+}
+
+
+# Get answer from user via rofi
+selected_option=$(echo "$lock
+$logout
+$sleep
+$reboot
+$shutdown" | rofi -dmenu\
+                  -p "$host" \
+                  -mesg "Uptime: $(uptime -p | sed s/up//g)"\
+                  -theme "~/.config/rofi/powermenu.rasi")
+# Do something based on selected option
+if [ "$selected_option" == "$lock" ]
+then
+    i3lock -c 1e1e2e -e
+elif [ "$selected_option" == "$logout" ]
+then
+    if show_confirmation "logout"; 
+    then
+    i3-msg exit
+    fi
+elif [ "$selected_option" == "$shutdown" ]
+then
+    if show_confirmation "shutdown"; 
+    then
+    systemctl poweroff
+    fi
+elif [ "$selected_option" == "$reboot" ]
+then
+    if show_confirmation "reboot"; 
+    then
+    systemctl reboot
+    fi
+elif [ "$selected_option" == "$sleep" ]
+then
+    amixer set Master mute
+    systemctl suspend
+else
+    echo "No match"
+fi
+
