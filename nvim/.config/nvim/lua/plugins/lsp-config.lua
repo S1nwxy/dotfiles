@@ -9,7 +9,6 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		opts = {
 			ensure_installed = {
-				"codelldb",
 				"clangd-format",
 			},
 		},
@@ -44,6 +43,7 @@ return {
 				capabilities = capabilities,
 			})
 			lspconfig.ltex.setup({
+				autostart = false,
 				capabilities = capabilities,
 				filetypes = { "latex", "tex", "markdown", "md" },
 				root_dir = lspconfig.util.root_pattern("ltex-cli", "ltex-ls"),
