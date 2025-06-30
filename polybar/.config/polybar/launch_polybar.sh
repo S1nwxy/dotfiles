@@ -20,6 +20,7 @@ if type "xrandr" > /dev/null; then
 	if [ $m == 'eDP' ] 
 	then		
 		MONITOR=$m polybar -c "$HOME/dotfiles/polybar/.config/polybar/config.ini" --reload main  &
+		MONITOR=$m polybar -c "$HOME/dotfiles/polybar/.config/polybar/config.ini" --reload tray  &
 	elif [ $m == 'HDMI-A-0' ]
 	then
 		MONITOR=$m polybar -c "$HOME/dotfiles/polybar/.config/polybar/config.ini" --reload sidebar & 
