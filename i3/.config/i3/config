@@ -9,7 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 1
 
 set $mod Mod4
 # set $mod Mod1
@@ -20,7 +20,7 @@ exec --no-startup-id xrdb -merge ~/.Xresources
 exec_always --no-startup-id setxkbmap 
 #-option ctrl:nocaps
 
-exec_always --no-startup-id redshift-gtk -l 45.43389:4.39 -t 6500:3000
+exec --no-startup-id redshift-gtk -l 45.43389:4.39 -t 6500:3000
 
 # To use autotiling (spiral tiling)or i3 instead of the default manual tiling (only vertical)
 # exec_always --no-startup-id autotiling 
@@ -87,6 +87,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork -c 1E1E2E
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
 
 exec --no-startup-id blueman-applet
 
