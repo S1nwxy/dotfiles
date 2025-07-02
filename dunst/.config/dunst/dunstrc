@@ -1,0 +1,51 @@
+# Add these settings to your dunstrc file
+
+[global]
+# General settings 
+# Set the default font
+
+monitor = 0
+
+width = (150,650)
+height = (200,650)
+
+
+follow = mouse
+
+font = "JetBrains Mono 10"
+
+frame_color = "#cba6f7"
+frame_width = 2
+
+gap_size = 10
+
+separator_color= frame
+highlight = "#89b4fa"
+
+vertical_alignment = center
+alignment = center
+
+# icon_theme = "Adwaita"
+enable_recursive_icon_lookup = true
+icon_path = "/usr/share/icons/Adwaita:/usr/share/icons/Adwaita/symbolic:/home/jojo/.config/dunst/icons:/tmp"
+default_icon = "/home/jojo/Images/test_dunst2.png"
+
+min_icon_size = 32
+max_icon_size =  160
+
+markup = full
+format = "<b>%s<b>\n\n%b"
+
+
+[urgency_low]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[urgency_normal]
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+
+[urgency_critical]
+background = "#f38ba8"
+foreground = "#1e1e2e"
+frame_color = "#f38ba8"
