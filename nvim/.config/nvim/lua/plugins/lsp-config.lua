@@ -21,17 +21,21 @@ return {
 					"clangd",
 					"marksman",
 					"bashls",
-					"csharp_ls",
+					-- "csharp_ls",
 					"html",
 					"phpactor",
-					"denols",
+					-- "denols",
 					"cssls",
+					"pyright",
 				},
 			})
 		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
+		opts = {
+			autoformat = false,
+		},
 		config = function()
 			local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -80,6 +84,9 @@ return {
 				capabilities = capabilities,
 			})
 			lspconfig.denols.setup({
+				capabilities = capabilities,
+			})
+			lspconfig.pyright.setup({
 				capabilities = capabilities,
 			})
 
