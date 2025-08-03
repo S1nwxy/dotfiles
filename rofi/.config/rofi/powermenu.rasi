@@ -7,13 +7,14 @@ configuration {
 
 /*****----- Global Properties -----*****/
 * {
-    bg-color:               #1e1e2e;
-    border-color:           #cba6f7;
+    bg-color:               @base;
+    border-color:           @mauve;
     //normal-foreground:      #b4befe;
-    normal-foreground:      #313244;
-    normal-background:      #f5e0dc;
+    normal-foreground:      @surface0;
+    normal-background:      @rosewater;
 
-    selected-normal-background: #b4befe;
+    // selected-normal-background: #b4befe;
+    selected-normal-background: @mauve;
     selected-normal-foreground: #1e1e2e;
 
     /*****----- Catppuccin Palette -----*****/

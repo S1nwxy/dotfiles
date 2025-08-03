@@ -10,6 +10,7 @@
 # theme="$type/$style"
 
 theme="./style-1.rasi"
+# theme="./powermenu.rasi"
 
 # Theme Elements
 prompt='Screenshot'
@@ -17,19 +18,20 @@ mesg="DIR: `xdg-user-dir PICTURES`/Screenshots"
 
 list_col='5'
 list_row='1'
-win_width='670px'
+win_width='500px'
 
 # Options
-option_1=""
-option_2="crop-symbolic"
-option_3=""
-option_4=""
-option_5=""
+option_1="󰆞  Select copy"
+option_2="󰹑  Screen copy"
+option_3="󰘔  App copy"
+option_4="󰆞  Select save"
+option_5="󰹑  Screen save"
+option_6="󰘔  App save"
 
+		# -theme-str "listview {columns: $list_col; lines: $list_row;}" \
 # Rofi CMD
 rofi_cmd() {
 	rofi -theme-str "window {width: $win_width;}" \
-		-theme-str "listview {columns: $list_col; lines: $list_row;}" \
 		-theme-str 'textbox-prompt-colon {str: " ";}' \
 		-dmenu \
 		-p "$prompt" \
@@ -40,7 +42,7 @@ rofi_cmd() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5" | rofi_cmd
+	echo -e "$option_1\n$option_2\n$option_3\n$option_4\n$option_5\n$option_6" | rofi_cmd
 }
 
 # Screenshot

@@ -30,7 +30,7 @@ $logout
 $sleep
 $reboot
 $shutdown" | rofi -dmenu\
-                  -p "$host" \
+                  -p " $host" \
                   -mesg "Uptime: $(uptime -p | sed s/up//g)"\
                   -theme "~/.config/rofi/powermenu.rasi")
 # Do something based on selected option
