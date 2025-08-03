@@ -34,7 +34,9 @@ exec_always --no-startup-id $HOME/.config/polybar/launch_polybar.sh
 # -L to set at which percentage the first notification should appear
 # -I to set after how many percentage the new popups needs to be sent
 # -f to set the font
-exec --no-startup-id $HOME/i3_battery_popup/i3-battery-popup-1.1.1/i3-battery-popup -n -L 30% -I 5% -f pango:JetBrains Mono 11 
+# exec --no-startup-id $HOME/i3_battery_popup/i3-battery-popup-1.1.1/i3-battery-popup -n -L 30% -I 5% -f pango:JetBrains Mono 11 
+# When installing via the AUR, i3_battery-popup work as an executable present in the $PATH. So no need to specify where it was installed when cloning the git repo
+exec --no-startup-id i3-battery-popup -n -L 30% -I 5% -f pango:JetBrains Mono 11 
 
 exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 
@@ -49,6 +51,7 @@ bindsym Print exec --no-startup-id maim --format=png | xclip -selection clipboar
 bindsym $mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 
 bindsym $mod+Shift+S exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+# bindsym $mod+Shift+S exec --no-startup-id $HOME/.config/rofi/screenshot.sh
 ########################################################################################
 
 # To enable touchpad tap clicking 
