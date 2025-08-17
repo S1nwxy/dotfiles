@@ -50,8 +50,8 @@ bindsym Ctrl+Shift+Print exec --no-startup-id maim --format=png --select "/home/
 bindsym Print exec --no-startup-id maim --format=png | xclip -selection clipboard -t image/png
 bindsym $mod+Print exec --no-startup-id maim --format=png --window $(xdotool getactivewindow) | xclip -selection clipboard -t image/png
 
-bindsym $mod+Shift+S exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
-# bindsym $mod+Shift+S exec --no-startup-id $HOME/.config/rofi/screenshot.sh
+# bindsym $mod+Shift+S exec --no-startup-id maim --format=png --select | xclip -selection clipboard -t image/png
+bindsym $mod+Shift+S exec --no-startup-id $HOME/.config/rofi/screenshot.sh
 ########################################################################################
 
 # To enable touchpad tap clicking 
