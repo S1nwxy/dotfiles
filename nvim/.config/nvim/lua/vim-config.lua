@@ -24,13 +24,19 @@ vim.cmd("set shiftwidth=4")
 vim.cmd("set rnu")
 vim.cmd("set nu")
 
+vim.cmd("set cursorline")
+
+vim.cmd("set updatetime=2000")
+
 -- Navigate vim planes better
 vim.keymap.set("n", "<c-k", ":wincmd k<CR>")
 vim.keymap.set("n", "<c-j", ":wincmd j<CR>")
 vim.keymap.set("n", "<c-h", ":wincmd h<CR>")
 vim.keymap.set("n", "<c-l", ":wincmd l<CR>")
 
-vim.lsp.set_log_level("off")
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+
+-- vim.lsp.set_log_level("off")
 
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.

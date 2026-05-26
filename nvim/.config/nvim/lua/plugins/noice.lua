@@ -60,12 +60,13 @@ return {
 			},
 			routes = {
 				{
+                    -- to ignore the lsp client ltex_plus status messages. Typically, it disables the "checking document" messages that ltex_plus produces everytime you type.
 					filter = {
 						event = "lsp",
 						kind = "progress",
 						cond = function(message)
 							local client = vim.tbl_get(message.opts, "progress", "client")
-							return client == "ltex"
+							return client == "ltex_plus"
 						end,
 					},
 					opts = { skip = "true" },

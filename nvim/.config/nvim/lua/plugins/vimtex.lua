@@ -14,7 +14,7 @@ return {
 					--		"-file-line-error",
 					"-synctex=1",
 					"-interaction=nonstopmode",
-					"-r /home/jojo/.latexmkrc",
+					"-r /home/jplasse/.latexmkrc",
 					-- "-auxdir=auxiliaries",
 					"-bibtex",
 				},

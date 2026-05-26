@@ -8,8 +8,12 @@ return {
 				null_ls.builtins.formatting.clang_format,
 				null_ls.builtins.formatting.markdownlint,
 				null_ls.builtins.formatting.latexindent,
-				null_ls.builtins.formatting.prettier,
-				null_ls.builtins.formatting.prettierd,
+				-- null_ls.builtins.formatting.prettier,
+				-- null_ls.builtins.formatting.prettierd,
+				null_ls.builtins.formatting.black,
+				null_ls.builtins.formatting.isort,
+				null_ls.builtins.diagnostics.ruff,
+				null_ls.builtins.formatting.shfmt,
 			},
 		})
 		vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
