@@ -1,0 +1,350 @@
+###
+#
+# Default config Sway
+#
+# To be copied in '~/.config/sway/config'
+#
+# Author : S1nwxy : 'https://github.com/S1nwxy'
+#
+###
+
+# On startup, "xdg-desktop-portal-gtk.service" can fail to startup.
+# Because of that, nautilus can't open images with Loupe, on Zen browser can't open nautilus to save a file
+# To be able to restart the service, we need to run this dbus-update command
+exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+set $mod Mod4
+
+blur enable
+blur_passes 2
+blur_radius 2
+
+corner_radius 10
+smart_corner_radius on
+
+shadows on
+shadow_blur_radius 20
+
+default_dim_inactive 0.05
+
+# Pour les notifications GTK (dunst, mako...)
+layer_effects "gtk-layer-shell" {
+    blur enable
+    corner_radius 8
+}
+
+### Font
+    # Font for window titles. Will also be used by the bar unless a different font
+    font pango:JetBrainsMono Nerd Font 11
+
+### Output configuration
+#
+# Wallpaper
+#
+    # Set the background image using swaybg (* - all monitors)
+    output * bg $HOME/.config/backgrounds/serenity.png fill
+    # output * bg $HOME/Images/whitebg.jpg fill
+#
+# Monitors
+#
+    # Main laptop screen
+    output eDP-1 pos 1920 0
+    # Secondary screen, placed on the left
+    output HDMI-A-1 pos 0 0
+    #NOTE: For more versatility, consider using kanshi/wdisplays(GUI)
+    # In order to get different connfigurations/setups
+
+### Bar configuration
+#
+    # Simply launch waybar instead of swaybar
+    bar swaybar_command waybar
+
+### Inputs
+#
+# Keyboard
+#
+    input "type:keyboard" {
+        xkb_layout fr
+    }
+#
+# Touchpad / Trackpad
+#
+    # To enable touchpad "tap clicking"
+    input "type:touchpad" {
+        tap enabled
+    }
+#
+# XP-Pen tablet (when having multiple monitors)
+#
+    input "10429:2311:10_inch_PenTablet" map_to_output eDP-1
+
+### Executing Applications
+#
+# Notification Daemon :
+#
+    exec swaync
+#
+# Screen night mode : 
+#
+    # Equivalent of redshift-gtk. Adjust the color temperature of the screen
+    exec gammastep -l 45.43389:4.39 -t 6500:3000
+#
+# Clipboard manager (clipse) :
+#
+    # run the background listener on startup
+    exec clipse -listen 
+    # style window to look nice
+    for_window [app_id="clipse"] floating enable, move position center, resize set 60ppt 60ppt
+#
+# Network / Bluetooth :
+#
+    # NetworkManager is the most popular way to manage wireless networks on Linux,
+    # and nm-applet is a desktop environment-independent system tray GUI for it.
+    exec nm-applet
+
+    # system tray for blueman bluetooth manager
+    exec blueman-applet
+#
+# Idle configuration :
+#
+    # This will lock your screen after 300 seconds of inactivity, then turn off
+    # your displays after another 300 seconds, and turn your screens back on when
+    # resumed. It will also lock your screen before your computer goes to sleep.
+    exec swayidle -w \
+             timeout 600 'swaylock -f -c 000000' \
+             timeout 660 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+             before-sleep 'swaylock -f -c 000000'
+
+### Key bindings
+#
+# Basics
+#
+    # reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # kill focused window
+    bindsym $mod+Shift+q kill
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+m exec "swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit Sway? This will end your Wayland session.' -B 'Yes, exit Sway' 'swaymsg exit'"
+
+    # Key-binding to lock the screen
+    # Mod1 is left "Alt" key
+    # bindsym Mod1+l exec xset dpms force off
+    bindsym Mod1+l exec $HOME/.config/i3/scripts/i3lock.sh
+
+    # Key-binding to suspend (sleep) the computer
+    bindsym Mod1+Shift+l exec systemctl suspend
+#
+# Apps / Utilities
+#
+    # Key-binding to launch Boomer 
+    # TODO: Change to WOOMER
+    # bindsym $mod+b exec boomer
+
+    # start a terminal
+    bindsym $mod+Return exec kitty
+
+    # start file manager nautilus
+    bindsym $mod+e exec nautilus
+
+    # Launch the swaync client (opens a notification hub)
+    bindsym $mod+n exec swaync-client -t -sw
+
+    # bind floating shell with clipse TUI
+    bindsym $mod+V exec kitty --class clipse -e clipse
+
+    # start rofi : an application launcher, and way more :
+    # Keycode 59 is the '.' key on AZERTY keyboard layout.
+    # The shortcut comes from Windows initially
+    bindsym $mod+d exec $HOME/.config/rofi/launcher.sh
+    bindsym $mod+m exec $HOME/.config/rofi/powermenu
+    bindsym $mod+c exec $HOME/.config/rofi/calculator.sh
+    bindcode $mod+59 exec rofi -theme $HOME/.config/rofi/emoji-selector.rasi -modi emoji -show emoji -kb-secondary-copy "" -kb-custom-1 Ctrl+c
+    bindsym $mod+Shift+S exec $HOME/.config/rofi/screenshot_hyprshot.sh
+
+    # Use pactl to adjust volume in PulseAudio.
+    # Using "dB" to get more accurate balance between left/right audio channels
+    # Can use percentage instead -5%/+5%
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +1dB 
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -1dB 
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle 
+    bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle 
+
+    # For the audio keyboard keys
+    bindsym XF86AudioPlay exec playerctl play-pause
+    bindsym XF86AudioNext exec playerctl next
+    bindsym XF86AudioPrev exec playerctl previous
+
+    # For the screen brightness
+    bindsym XF86MonBrightnessUp exec  brightnessctl set +5%
+    bindsym XF86MonBrightnessDown exec  brightnessctl set 5%-
+#
+# Moving around
+#
+    bindsym $mod+h focus left
+    bindsym $mod+j focus down
+    bindsym $mod+k focus up
+    bindsym $mod+l focus right
+
+    # alternatively, you can use the cursor keys:
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    # move focused window
+    bindsym $mod+Shift+h move left
+    bindsym $mod+Shift+j move down
+    bindsym $mod+Shift+k move up
+    bindsym $mod+Shift+l move right
+
+    # alternatively, you can use the cursor keys:
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+#
+# Workspaces
+#
+    # Switch to workspace
+    bindsym $mod+ampersand workspace number 1
+    bindsym $mod+eacute workspace number 2
+    bindsym $mod+quotedbl workspace number 3
+    bindsym $mod+apostrophe workspace number 4
+    bindsym $mod+parenleft workspace number 5
+    bindsym $mod+minus workspace number 6
+    bindsym $mod+egrave workspace number 7
+    bindsym $mod+underscore workspace number 8
+    bindsym $mod+ccedilla workspace number 9
+    bindsym $mod+agrave workspace number 10
+
+    # move focused container to workspace
+    bindsym $mod+Shift+ampersand move container to workspace number 1
+    bindsym $mod+Shift+eacute move container to workspace number 2
+    bindsym $mod+Shift+quotedbl move container to workspace number 3
+    bindsym $mod+Shift+apostrophe move container to workspace number 4
+    bindsym $mod+Shift+parenleft move container to workspace number 5
+    bindsym $mod+Shift+minus move container to workspace number 6
+    bindsym $mod+Shift+egrave move container to workspace number 7
+    bindsym $mod+Shift+underscore move container to workspace number 8
+    bindsym $mod+Shift+ccedilla move container to workspace number 9
+    bindsym $mod+Shift+agrave move container to workspace number 10
+    #NOTE: workspaces can have any name you want, not just numbers.
+#
+# Layout stuff
+#
+    # change container layout (stacked, tabbed, toggle split)
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+Shift+e layout toggle split
+
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    # respectively.
+    # Using 'I' because it kinds of look like a vertical bar '|'
+    bindsym $mod+I splith
+    bindsym $mod+Shift+v splitv
+
+    # enter fullscreen mode for the focused container
+    bindsym $mod+f fullscreen toggle
+
+    # toggle tiling / floating
+    bindsym $mod+Shift+space floating toggle
+
+    # focus the parent container
+    bindsym $mod+a focus parent
+
+    # Remove the title bar of windows
+    # And replace it by a 1 pixel width border
+    for_window [class="^.*"] border pixel 1
+
+    gaps outer 6 
+    gaps inner 6
+
+    # focus the child container
+    #bindsym $mod+d focus child
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    # bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    # bindsym $mod+minus scratchpad show
+#
+# Resize mode :
+#
+    # resize window (you can also use the mouse for that)
+    mode "resize" {
+            # These bindings trigger as soon as you enter the resize mode
+
+            # Pressing left will shrink the window’s width.
+            # Pressing right will grow the window’s width.
+            # Pressing up will shrink the window’s height.
+            # Pressing down will grow the window’s height.
+            bindsym h resize shrink width 10 px or 10 ppt
+            bindsym j resize shrink height 10 px or 10 ppt
+            bindsym k resize grow height 10 px or 10 ppt
+            bindsym l resize grow width 10 px or 10 ppt
+
+            # same bindings, but for the arrow keys
+            bindsym Left resize shrink width 10 px or 10 ppt
+            bindsym Down resize shrink height 10 px or 10 ppt
+            bindsym Up resize grow height 10 px or 10 ppt
+            bindsym Right resize grow width 10 px or 10 ppt
+
+            # back to normal: Enter or Escape or $mod+r
+            bindsym Return mode "default"
+            bindsym Escape mode "default"
+            bindsym $mod+r mode "default"
+}
+    bindsym $mod+r mode "resize"
+
+### Colors
+#
+    set $rosewater #f5e0dc
+    set $flamingo  #f2cdcd
+    set $pink      #f5c2e7
+    set $mauve     #cba6f7
+    set $red       #f38ba8
+    set $maroon    #eba0ac
+    set $peach     #fab387
+    set $yellow    #f9e2af
+    set $green     #a6e3a1
+    set $teal      #94e2d5
+    set $sky       #89dceb
+    set $sapphire  #74c7ec
+    set $blue      #89b4fa
+    set $lavender  #b4befe
+    set $text      #cdd6f4
+    set $subtext1  #bac2de
+    set $subtext0  #a6adc8
+    set $overlay2  #9399b2
+    set $overlay1  #7f849c
+    set $overlay0  #6c7086
+    set $surface2  #585b70
+    set $surface1  #45475a
+    set $surface0  #313244
+    set $base      #1e1e2e
+    set $mantle    #181825
+    set $crust     #11111b
+
+    # target                 title     bg     text     indicator    border
+    client.focused           $mantle   $mauve $mantle  $rosewater   $mauve
+    client.focused_inactive  $overlay0 $base  $text    $rosewater   $overlay0
+    client.unfocused         $overlay0 $base  $text    $rosewater   $overlay0
+    client.urgent            $peach    $base  $peach   $overlay0    $peach
+    client.placeholder       $overlay0 $base  $text    $overlay0    $overlay0
+    client.background        $base
